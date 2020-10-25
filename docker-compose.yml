@@ -36,8 +36,6 @@ services:
     build:
       context: ./auth
       dockerfile: Dockerfile
-    ports:
-    - ${AUTH_PORT}:${AUTH_PORT}
     networks:
       - service-network
       - auth-db-network
@@ -49,13 +47,11 @@ services:
       - ./.env
 
   auth-db:
-    image: postgres:10
+    image: postgres:12
     environment:
       POSTGRES_DB: ${AUTH_DB_NAME}
       POSTGRES_USER: ${AUTH_DB_USERNAME}
       POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
-    ports:
-    - 5432:5432
     volumes:
       - $PWD/volumes/authdb:/var/lib/postgresql/data
     networks:
