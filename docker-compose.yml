@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+
+  redis:
+    image: redis:latest
+    networks:
+      - service-network
+
+  rabbitmq:
+    image: rabbitmq:3
+    networks:
+      - service-network
+
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    ports:
+    - ${AUTH_PORT}:${AUTH_PORT}
+    networks:
+      - service-network
+      - auth-db-network
+    depends_on:
+      - auth-db
+      - redis
+      - rabbitmq
+    env_file:
+      - ./.env
+
+  auth-db:
+    image: postgres:10
+    environment:
+      POSTGRES_DB: ${AUTH_DB_NAME}
+      POSTGRES_USER: ${AUTH_DB_USERNAME}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
+    ports:
+    - 5432:5432
+#    volumes:
+#      - $PWD/volumes/authdb:/var/lib/postgresql/data
+    networks:
+      - auth-db-network
+
+networks:
+  auth-db-network:
+    driver: bridge
+  service-network:
+    driver: bridge

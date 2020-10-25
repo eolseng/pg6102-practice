@@ -15,12 +15,14 @@ class UserService(
         private val authManager: AuthenticationManager,
         private val passwordEncoder: PasswordEncoder
 ) {
+
     fun createUser(
             username: String,
             password: String,
             roles: Set<String> = setOf()
     ): Boolean {
         try {
+
             val hash = passwordEncoder.encode(password)
             val caseInsensitiveUsername = username.toLowerCase()
 

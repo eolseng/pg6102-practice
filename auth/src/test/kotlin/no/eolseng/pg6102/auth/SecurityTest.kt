@@ -222,7 +222,7 @@ class SecurityTest {
                 .get("/user")
                 .then().assertThat()
                 .statusCode(200)
-                .body("data.name", equalTo(dto.username))
+                .body("data.username", equalTo(dto.username))
                 .body("data.roles", contains("ROLE_USER"))
     }
 

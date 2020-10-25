@@ -81,7 +81,7 @@
 
             <!-- Utils used in various other modules -->
             <dependency>
-                <groupId>no.eolseng.cardgame</groupId>
+                <groupId>no.eolseng.pg6102</groupId>
                 <artifactId>utils</artifactId>
                 <version>${project.version}</version>
             </dependency>

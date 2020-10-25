@@ -2,11 +2,11 @@ package no.eolseng.pg6102.auth
 
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import no.eolseng.cardgame.utils.wrappedresponse.RestResponseFactory
-import no.eolseng.cardgame.utils.wrappedresponse.WrappedResponse
 import no.eolseng.pg6102.auth.db.UserDetailsServiceImpl
 import no.eolseng.pg6102.auth.db.UserService
 import no.eolseng.pg6102.auth.dto.AuthDto
+import no.eolseng.pg6102.utils.wrappedresponse.RestResponseFactory
+import no.eolseng.pg6102.utils.wrappedresponse.WrappedResponse
 import org.springframework.amqp.AmqpException
 import org.springframework.amqp.core.FanoutExchange
 import org.springframework.amqp.rabbit.core.RabbitTemplate
@@ -36,7 +36,7 @@ class RestApi(
     @GetMapping("/user")
     fun user(user: Authentication): ResponseEntity<WrappedResponse<Map<String, Any>>> {
         val map = mutableMapOf<String, Any>()
-        map["name"] = user.name
+        map["username"] = user.name
         map["roles"] = AuthorityUtils.authorityListToSet(user.authorities)
         return RestResponseFactory.payload(200, map)
     }

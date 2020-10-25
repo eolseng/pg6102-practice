@@ -5,7 +5,6 @@ WORKDIR app
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 # Copy over .jar-file
-ARG JAR_FILE_NAME=auth
-COPY ./target/${JAR_FILE_NAME}.jar .
+COPY ./target/auth.jar .
 # Defines the entrypoint for the container
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+CMD java -jar auth.jar

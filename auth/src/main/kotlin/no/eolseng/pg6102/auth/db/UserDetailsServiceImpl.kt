@@ -20,7 +20,7 @@ class UserDetailsServiceImpl(
                 .orElseThrow {
                     throw UsernameNotFoundException("No user with username $username found.")
                 }
-        val authorities = user.roles.map { GrantedAuthority { it } }
+        val authorities = user.roles!!.map { GrantedAuthority { it } }
         return User(user.username, user.password, authorities)
     }
 
