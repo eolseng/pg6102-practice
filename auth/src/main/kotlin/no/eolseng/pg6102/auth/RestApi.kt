@@ -62,7 +62,7 @@ class RestApi(
             // Failed to publish message - rolling back
             // TODO: Should check return value and log if rollback failed
             service.deleteUser(username, password)
-            return RestResponseFactory.serverFailure("Could not publish creation message. Rolled back.")
+            return RestResponseFactory.serverFailure("Server failed to create user")
         }
 
         // Attempt to retrieve the user from database

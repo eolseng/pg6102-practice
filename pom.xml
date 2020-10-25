@@ -10,6 +10,7 @@
 
     <modules>
         <module>utils</module>
+        <module>gateway</module>
         <module>auth</module>
     </modules>
 
@@ -167,7 +168,6 @@
                 <artifactId>json-path</artifactId>
                 <version>${restassured.version}</version>
                 <scope>test</scope>
-
             </dependency>
             <dependency>
                 <groupId>io.rest-assured</groupId>

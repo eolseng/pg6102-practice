@@ -2,6 +2,13 @@ version: '3.8'
 
 services:
 
+  discovery:
+    image: consul:1.8
+    environment:
+      - CONSUL_LOCAL_CONFIG={"log_level":"info"}
+    networks:
+      - service-network
+
   redis:
     image: redis:latest
     networks:
@@ -11,6 +18,19 @@ services:
     image: rabbitmq:3
     networks:
       - service-network
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - 80:8080
+    networks:
+      - service-network
+    env_file:
+      - ./.env
+    depends_on:
+      - discovery
 
   auth:
     build:
@@ -36,8 +56,8 @@ services:
       POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
     ports:
     - 5432:5432
-#    volumes:
-#      - $PWD/volumes/authdb:/var/lib/postgresql/data
+    volumes:
+      - $PWD/volumes/authdb:/var/lib/postgresql/data
     networks:
       - auth-db-network
 
