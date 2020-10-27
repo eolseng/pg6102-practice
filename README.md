@@ -13,7 +13,7 @@ Attempting to design as a "Twelve-Factor App", but using a root-POM as done in t
 > Use 'chmod +x ./**SCRIPT_NAME**' if permission is denied.
 
 ## Local development
-To start all backing services (databases and supporting services), use the script `./start-dev` in the root folder.
+Use the script `./start-dev` in the root folder to start all backing services (databases, Redis etc.).
 ### Table of ports
 | Name:     | Type:     | Port  |
 | ---       | ---       | ---   |
