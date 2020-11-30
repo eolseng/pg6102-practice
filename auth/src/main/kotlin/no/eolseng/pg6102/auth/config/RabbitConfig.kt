@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class RabbitConfig {
     @Bean
-    fun newUserFanout(): FanoutExchange {
-        return FanoutExchange("new_user.fx")
+    fun userCreatedFanout(): FanoutExchange {
+        return FanoutExchange("user.created.fx")
     }
 }

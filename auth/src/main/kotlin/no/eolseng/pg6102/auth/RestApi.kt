@@ -29,7 +29,7 @@ class RestApi(
         private val authManager: AuthenticationManager,
         private val userDetailsService: UserDetailsServiceImpl,
         private val rabbitMQ: RabbitTemplate,
-        private val newUserFanout: FanoutExchange
+        private val userCreatedFanout: FanoutExchange
 ) {
 
     @ApiOperation("Retrieve name and roles of signed in user")
@@ -57,7 +57,7 @@ class RestApi(
 
         // Publish message that a new user is created
         try {
-            rabbitMQ.convertAndSend(newUserFanout.name, "", username)
+            rabbitMQ.convertAndSend(userCreatedFanout.name, "", username)
         } catch (e: AmqpException) {
             // Failed to publish message - rolling back
             // TODO: Should check return value and log if rollback failed

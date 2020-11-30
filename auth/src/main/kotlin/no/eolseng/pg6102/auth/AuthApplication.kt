@@ -7,12 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @SpringBootApplication
-class AuthApplication {
-    @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
-}
+class AuthApplication
 
 fun main(args: Array<String>) {
     SpringApplication.run(AuthApplication::class.java, *args)

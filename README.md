@@ -25,12 +25,12 @@ Uses Redis to store active sessions so other services can verify requests that r
 and messages the other services via RabbitMQ on creation of new accounts.
 
 
-
 ## Supporting services
 * **PostgreSQL** database for persistent storage.
 * **Consul** as discovery service.
 * **Redis** for storing active sessions.
 * **RabbitMQ** as message-broker.
+    * Uses the `service.action.exchangetype` naming scheme for exchanges, e.g. `user.created.fx` for a fanout-exchange ('fx') used when new users are created.
 
 ### Table of ports
 | Name:     | Type:     | Port  |
