@@ -3,6 +3,11 @@ Microservice architecture based on SpringBoot, written in Kotlin.
 
 Attempting to design as a "Twelve-Factor App", but using a root-POM as done in the course.
 
+## TODO:
+1. Remove CORS configuration for Front End development
+    * Remove `http://localhost` as `BASE_PATH`s in the `frontend` module
+    * Remove the `DevConfig` files from all modules 
+
 ## Scripts:
 * `./build-and-start`
     * Rebuilds all .jar files and Docker images

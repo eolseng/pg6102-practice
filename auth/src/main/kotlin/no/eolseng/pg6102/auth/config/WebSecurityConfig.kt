@@ -64,6 +64,8 @@ class WebSecurityConfig(
                 .and()
 
                 // Other
+                .cors()
+                .and()
                 .csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
