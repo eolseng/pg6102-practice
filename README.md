@@ -35,7 +35,7 @@ and messages the other services via RabbitMQ on creation of new accounts.
 ### Table of ports
 | Name:     | Type:     | Port  |
 | ---       | ---       | ---   |
-| Gateway   | Service   | 8080  | 
+| Gateway   | Service   | 8080  |
 | Auth      | Service   | 8081  |
 | Auth      | Database  | 5432  |
 | Discovery | Support   | 8500  |
