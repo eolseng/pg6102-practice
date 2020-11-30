@@ -14,6 +14,24 @@ Attempting to design as a "Twelve-Factor App", but using a root-POM as done in t
 
 ## Local development
 Use the script `./start-dev` in the root folder to start all backing services (databases, Redis etc.).
+
+## Modules
+### Gateway
+Used as the entrypoint for the microservices. Exposed on port 8080 and redirects requests to the correct service based on URL paths.
+
+### Auth
+Authentication service that stores usernames and hashed passwords in the connected database.
+Uses Redis to store active sessions so other services can verify requests that require authentication,
+and messages the other services via RabbitMQ on creation of new accounts.
+
+
+
+## Supporting services
+* **PostgreSQL** database for persistent storage.
+* **Consul** as discovery service.
+* **Redis** for storing active sessions.
+* **RabbitMQ** as message-broker.
+
 ### Table of ports
 | Name:     | Type:     | Port  |
 | ---       | ---       | ---   |
