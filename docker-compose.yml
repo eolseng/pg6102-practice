@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
 
+  # SUPPORTING SERVICES
   discovery:
     image: consul:1.8
     environment:
@@ -19,6 +20,7 @@ services:
     networks:
       - service-network
 
+  # GATEWAY SERVICE
   gateway:
     build:
       context: ./gateway
@@ -32,6 +34,7 @@ services:
     depends_on:
       - discovery
 
+  # AUTH SERVICE
   auth:
     build:
       context: ./auth
@@ -53,9 +56,19 @@ services:
       POSTGRES_USER: ${AUTH_DB_USERNAME}
       POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
     volumes:
-      - $PWD/volumes/authdb:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     networks:
       - auth-db-network
+
+  # FRONTEND SERVICE
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - service-network
+    env_file:
+      - ./.env
 
 networks:
   auth-db-network:
