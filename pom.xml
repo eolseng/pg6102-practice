@@ -13,6 +13,7 @@
         <module>gateway</module>
         <module>auth</module>
         <module>frontend</module>
+        <module>blueprint</module>
     </modules>
 
     <properties>

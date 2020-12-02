@@ -60,6 +60,32 @@ services:
     networks:
       - auth-db-network
 
+  # BLUEPRINT SERVICE
+  blueprint:
+    build:
+      context: ./blueprint
+      dockerfile: Dockerfile
+    networks:
+      - service-network
+      - blueprint-db-network
+    depends_on:
+      - blueprint-db
+      - redis
+      - rabbitmq
+    env_file:
+      - ./.env
+
+  blueprint-db:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: ${BLUEPRINT_DB_NAME}
+      POSTGRES_USER: ${BLUEPRINT_DB_USERNAME}
+      POSTGRES_PASSWORD: ${BLUEPRINT_DB_PASSWORD}
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - blueprint-db-network
+
   # FRONTEND SERVICE
   frontend:
     build:
@@ -71,7 +97,9 @@ services:
       - ./.env
 
 networks:
+  service-network:
+    driver: bridge
   auth-db-network:
     driver: bridge
-  service-network:
+  blueprint-db-network:
     driver: bridge

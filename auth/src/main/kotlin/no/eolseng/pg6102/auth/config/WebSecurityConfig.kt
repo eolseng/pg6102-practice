@@ -52,20 +52,18 @@ class WebSecurityConfig(
 
                 // Authorization
                 .authorizeRequests()
-                    // Actuator endpoints
+                // Actuator endpoints
                 .antMatchers("/actuator/**").permitAll()
-                    // Service End-Points
+                // Service End-Points
                 .antMatchers("/api/v1/auth/signup").permitAll()
                 .antMatchers("/api/v1/auth/login").permitAll()
                 .antMatchers("/api/v1/auth/logout").permitAll()
                 .antMatchers("/api/v1/auth/user").authenticated()
-                    // Block anything else
+                // Block anything else
                 .anyRequest().denyAll()
                 .and()
 
                 // Other
-                .cors()
-                .and()
                 .csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

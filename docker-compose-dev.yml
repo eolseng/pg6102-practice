@@ -22,12 +22,3 @@ services:
     image: rabbitmq:3
     ports:
     - 5672:5672
-
-  auth-db:
-    image: postgres:12
-    ports:
-    - 5432:5432
-    environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: ""
