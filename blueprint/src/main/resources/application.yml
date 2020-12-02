@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: blueprint
+  resources:
+    add-mappings: false
 
   # Database
   datasource:

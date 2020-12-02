@@ -14,7 +14,7 @@ data class BlueprintDto(
         var description: String? = null,
 
         @get:ApiModelProperty("The value of the blueprint")
-        var value: Long? = null
+        var value: Int? = null
 
 )
 

@@ -1,6 +1,5 @@
 package no.eolseng.pg6102.blueprint.db
 
-import org.springframework.amqp.AmqpException
 import org.springframework.amqp.core.FanoutExchange
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Service
@@ -15,7 +14,7 @@ class BlueprintService(
     fun createBlueprint(
             title: String,
             description: String,
-            value: Long
+            value: Int
     ): Blueprint? {
 
         // Create the blueprint

@@ -2,11 +2,10 @@ package no.eolseng.pg6102.blueprint
 
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
-import org.junit.Assert.assertTrue
 import no.eolseng.pg6102.blueprint.db.BlueprintRepository
-import no.eolseng.pg6102.blueprint.db.BlueprintService
 import no.eolseng.pg6102.blueprint.dto.BlueprintDto
 import org.hamcrest.CoreMatchers.equalTo
+import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -65,7 +64,7 @@ class RestApiTest {
         val title = "test_title_$id"
         val description = "test_description_$id"
         // Create the DTO
-        val dto = BlueprintDto(title = title, description = description, value = value.toLong())
+        val dto = BlueprintDto(title = title, description = description, value = value)
         // Register the Blueprint and extract the Location Header
         val redirect =
                 RestAssured.given()
