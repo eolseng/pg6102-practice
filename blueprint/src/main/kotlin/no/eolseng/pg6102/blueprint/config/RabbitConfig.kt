@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class RabbitConfig {
     @Bean
-    fun blueprintCreatedFanout(): FanoutExchange {
+    fun blueprintCreatedFx(): FanoutExchange {
         return FanoutExchange("blueprint.created.fx")
     }
 }
