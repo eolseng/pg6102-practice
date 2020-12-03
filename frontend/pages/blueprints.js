@@ -28,7 +28,9 @@ export default function Blueprints() {
             <div className={"d-flex flex-wrap"}>
                 {blueprints.map(bp => <BlueprintCard blueprint={bp}/>)}
             </div>
-            {next && <Button className={"m-1"} onClick={getNextPage}>Get more</Button>}
+            {next &&
+            <Button className={"m-1"} onClick={getNextPage}>Get more</Button>
+            }
         </div>
     )
 
