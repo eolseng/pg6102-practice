@@ -1,4 +1,4 @@
-package no.eolseng.pg6102.blueprint
+package no.eolseng.pg6102.blueprint.config
 
 import no.eolseng.pg6102.blueprint.config.WebSecurityConfig
 import org.springframework.context.annotation.Configuration
