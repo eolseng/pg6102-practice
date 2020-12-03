@@ -2,7 +2,6 @@ package no.eolseng.pg6102.blueprint.db
 
 import org.springframework.amqp.core.FanoutExchange
 import org.springframework.amqp.rabbit.core.RabbitTemplate
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.TypedQuery
@@ -41,7 +40,7 @@ class BlueprintService(
     fun getNextPage(
             keysetId: Int?,
             keysetTitle: String?,
-            amount: Int = 10
+            amount: Int
     ): List<Blueprint> {
 
         // Query should either have both or none of id and title

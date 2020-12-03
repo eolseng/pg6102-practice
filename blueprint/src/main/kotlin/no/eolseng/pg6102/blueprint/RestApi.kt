@@ -39,6 +39,9 @@ class RestApi(
         // Validate the DTO
         if (!dto.validateRegistration())
             return RestResponseFactory.userError("Invalid registration data")
+        // Check if title exists
+        if (repository.existsByTitle(dto.title!!))
+            return RestResponseFactory.userError("Blueprint with title ${dto.title} already exists")
         // Save blueprint in the database
         val blueprint = service.createBlueprint(dto.title!!, dto.description!!, dto.value!!)
                 ?: return RestResponseFactory.serverFailure("Failed to create Blueprint", 500)
@@ -72,8 +75,10 @@ class RestApi(
             @RequestParam("keysetTitle", required = false)
             keysetTitle: String?,
             @RequestParam("amount", required = false)
-            amount: Int = 10
+            amount: Int?
     ): ResponseEntity<WrappedResponse<PageDto<BlueprintDto>>> {
+        // Set amount if not supplied
+        val amount = amount ?: 10
         // Create page dto
         val page = PageDto<BlueprintDto>()
         // Fetch Blueprints and convert to DTOs
