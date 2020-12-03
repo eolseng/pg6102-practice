@@ -77,15 +77,14 @@ class RestApi(
         // Create page dto
         val page = PageDto<BlueprintDto>()
         // Fetch Blueprints and convert to DTOs
-        val dtos = service.getNextPage(amount, keysetId, keysetTitle).map { it.toDto() }
+        val dtos = service.getNextPage(keysetId, keysetTitle, amount).map { it.toDto() }
         page.list = dtos
-        // Check if not last page
+        // Check if not last page - will return a blank last page if match
         if (dtos.size == amount) {
             page.next = "$API_BASE_PATH?keysetId=${dtos.last().id}&keysetTitle=${dtos.last().title}&amount=$amount"
         }
         // Return the page
         return RestResponseFactory.payload(200, page)
     }
-
 
 }

@@ -38,7 +38,7 @@ class RestApiTest {
         // Setup RestAssured
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
-        RestAssured.basePath = "$API_BASE_PATH"
+        RestAssured.basePath = API_BASE_PATH
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
 
         // Clear repository
@@ -146,15 +146,14 @@ class RestApiTest {
         val pages = 4
         val pageSize = 5
         val total = pages * pageSize
+        val uniqueIds = mutableSetOf<Int>()
+
         // Register n Blueprints
         for (x in 0 until total) {
             registerBlueprint()
         }
         // Verify with repository
         assertEquals(total, repository.count().toInt())
-
-        val uniqueIds = mutableSetOf<Int>()
-
         // Get first page
         var res = RestAssured.given()
                 .accept(ContentType.JSON)
@@ -171,7 +170,6 @@ class RestApiTest {
         uniqueIds.addAll(dtos.map { it.id!! })
         // Check the ordering
         dtos.checkOrder()
-
         // Check rest of the pages
         while (next != null) {
             res = RestAssured.given()

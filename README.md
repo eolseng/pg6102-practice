@@ -4,9 +4,7 @@ Microservice architecture based on SpringBoot, written in Kotlin.
 Attempting to design as a "Twelve-Factor App", but using a root-POM as done in the course.
 
 ## TODO:
-1. Remove CORS configuration for Front End development
-    * Remove `http://localhost` as `BASE_PATH`s in the `frontend` module
-    * Remove the `DevConfig` files from all modules 
+1. Check out [jOOQ](https://www.jooq.org/doc/latest/manual/sql-execution/alternative-execution-models/using-jooq-with-jpa/) with `seek()` for easier implementation of keyset/seek pagination
 
 ## Scripts:
 * `./build-and-start`

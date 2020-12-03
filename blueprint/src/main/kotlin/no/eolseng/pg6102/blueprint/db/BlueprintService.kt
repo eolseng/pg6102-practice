@@ -2,6 +2,7 @@ package no.eolseng.pg6102.blueprint.db
 
 import org.springframework.amqp.core.FanoutExchange
 import org.springframework.amqp.rabbit.core.RabbitTemplate
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.TypedQuery
@@ -34,11 +35,15 @@ class BlueprintService(
 
     }
 
+    /**
+     * Gets all Blueprints sorted by Title as pages
+     */
     fun getNextPage(
-            amount: Int,
             keysetId: Int?,
-            keysetTitle: String?
+            keysetTitle: String?,
+            amount: Int = 10
     ): List<Blueprint> {
+
         // Query should either have both or none of id and title
         if ((keysetId == null && keysetTitle != null) || (keysetId != null && keysetTitle == null)) {
             throw IllegalArgumentException("Need either both or none of keysetId and keysetTitle")
@@ -55,17 +60,31 @@ class BlueprintService(
                     Blueprint::class.java
             )
         } else {
+            // Can be used to parameterize the pagination
+//            val last = repo.findByIdOrNull(keysetId)
+//                    ?: throw IllegalArgumentException("Invalid keysetId - Blueprint does not exist")
+//            val ascOrder = false
+//            val field = "title"
+//
+//            val operator = mapOf(Pair(true, ">"), Pair(false, "<"))
+//            val sort = mapOf(Pair(true, "ASC"), Pair(false, "DESC"))
+//
+//            val selectString = "select b from Blueprint b"
+//            val whereString = "where b.$field${operator[ascOrder]}?2 or (b.$field=?2 and b.id${operator[ascOrder]}?1)"
+//            val orderString = "order by b.$field ${sort[ascOrder]}, b.id ${sort[ascOrder]}"
             query = entityManager.createQuery(
+//                    "$selectString $whereString $orderString",
                     "select b from Blueprint b where b.title<?2 or (b.title=?2 and b.id<?1) order by b.title DESC, b.id DESC",
                     Blueprint::class.java
             )
             query.setParameter(1, keysetId)
             query.setParameter(2, keysetTitle)
+//            query.setParameter(1, last.id)
+//            query.setParameter(2, last.title)
         }
         query.maxResults = amount
 
         return query.resultList
-
     }
 
 }
