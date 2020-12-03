@@ -54,7 +54,9 @@ class WebSecurityConfig(
                 .authorizeRequests()
                 // Actuator endpoints
                 .antMatchers("/actuator/**").permitAll()
-                // Service End-Points
+                // Swagger endpoints
+                .antMatchers("/swagger*/**", "/v3/api-docs").permitAll()
+                // Service endpoints
                 .antMatchers("/api/v1/auth/signup").permitAll()
                 .antMatchers("/api/v1/auth/login").permitAll()
                 .antMatchers("/api/v1/auth/logout").permitAll()

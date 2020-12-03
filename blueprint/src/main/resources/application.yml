@@ -6,6 +6,8 @@ spring:
     name: blueprint
   resources:
     add-mappings: false
+  mvc:
+    throwExceptionIfNoHandlerFound: true
 
   # Database
   datasource:
