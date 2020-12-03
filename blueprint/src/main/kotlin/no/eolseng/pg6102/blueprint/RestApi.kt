@@ -49,15 +49,34 @@ class RestApi(
         return RestResponseFactory.created(URI.create("$API_BASE_PATH/${blueprint.id}"))
     }
 
+    @ApiOperation("Delete a specific Blueprint by the ID")
+    @DeleteMapping("/{id}")
+    fun deleteBlueprintById(
+            @ApiParam("The ID of the Blueprint to delete")
+            @PathVariable("id") pathId: String
+    ): ResponseEntity<WrappedResponse<Void>> {
+        // Convert pathId to Int value
+        val id = pathId.toIntOrNull()
+                ?: return RestResponseFactory.userError("ID must be a number")
+        // Check that the Blueprint exists
+        if (!repository.existsById(id))
+            return RestResponseFactory.userError("Blueprint with ID $id does not exist")
+        // Delete the Blueprint
+        repository.deleteById(id)
+        // Return confirmation to user
+        return RestResponseFactory.noPayload(204)
+    }
+
     @ApiOperation("Retrieve a specific Blueprint by the ID")
     @GetMapping("/{id}")
     fun getBlueprintById(
-            @ApiParam("The id of the Blueprint")
+            @ApiParam("The ID of the Blueprint to retrieve")
             @PathVariable("id") pathId: String
     ): ResponseEntity<WrappedResponse<Any>> {
-        // Convert pathId to Long value
+        //
+        // Convert pathId to Int value
         val id = pathId.toIntOrNull()
-                ?: return RestResponseFactory.userError("Id must be a number")
+                ?: return RestResponseFactory.userError("ID must be a number")
         // Retrieve Blueprint from repository
         val blueprint = repository.findByIdOrNull(id)
                 ?: return RestResponseFactory.notFound("Could not find Blueprint with ID $id")
