@@ -1,6 +1,8 @@
 package no.eolseng.pg6102.blueprint.config
 
+import no.eolseng.pg6102.blueprint.API_BASE_PATH
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -9,7 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
@@ -24,7 +25,9 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 // Actuator endpoints
                 .antMatchers("/actuator/**").permitAll()
                 // Service endpoints
-                .antMatchers("/api/v1/blueprint**").permitAll()
+                .antMatchers(HttpMethod.GET,"$API_BASE_PATH*/**").permitAll()
+                .antMatchers(HttpMethod.POST,"$API_BASE_PATH*/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"$API_BASE_PATH*/**").hasRole("ADMIN")
                 // Block anything else
                 .anyRequest().denyAll()
                 .and()

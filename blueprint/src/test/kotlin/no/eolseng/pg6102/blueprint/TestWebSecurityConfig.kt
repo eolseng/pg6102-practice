@@ -13,7 +13,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 @Order(1)
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
 class TestWebSecurityConfig : WebSecurityConfig() {
 
     override fun configure(http: HttpSecurity) {

@@ -53,7 +53,6 @@ class RestApi(
     }
 
     @ApiOperation("Delete a specific Blueprint by the ID")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     fun deleteBlueprintById(
             @ApiParam("The ID of the Blueprint to delete")
