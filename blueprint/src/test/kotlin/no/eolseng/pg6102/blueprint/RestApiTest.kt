@@ -70,6 +70,7 @@ class RestApiTest {
         // Register the Blueprint and extract the Location Header
         val redirect =
                 RestAssured.given()
+                        .auth().basic("admin", "admin")
                         .contentType(ContentType.JSON)
                         .body(dto)
                         .post()
@@ -103,6 +104,25 @@ class RestApiTest {
                 .body("data.title", equalTo(blueprint.title))
                 .body("data.description", equalTo(blueprint.description))
                 .body("data.value", equalTo(value))
+    }
+
+    @Test
+    fun `delete blueprint by id`() {
+        val id = registerBlueprint()
+
+        // Not ADMIN
+        RestAssured.given()
+                .accept(ContentType.JSON)
+                .delete("/$id")
+                .then().assertThat()
+                .statusCode(401)
+        // Is ADMIN
+        RestAssured.given()
+                .auth().basic("admin", "admin")
+                .accept(ContentType.JSON)
+                .delete("/$id")
+                .then().assertThat()
+                .statusCode(204)
     }
 
     @Test
@@ -190,4 +210,5 @@ class RestApiTest {
         // Check that all Blueprints have been retrieved
         assertEquals(total, uniqueIds.size)
     }
+
 }

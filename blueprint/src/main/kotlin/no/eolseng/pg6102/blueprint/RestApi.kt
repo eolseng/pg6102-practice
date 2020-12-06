@@ -14,6 +14,9 @@ import no.eolseng.pg6102.utils.wrappedresponse.WrappedResponse
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 
@@ -53,7 +56,8 @@ class RestApi(
     @DeleteMapping("/{id}")
     fun deleteBlueprintById(
             @ApiParam("The ID of the Blueprint to delete")
-            @PathVariable("id") pathId: String
+            @PathVariable("id") pathId: String,
+            auth: Authentication
     ): ResponseEntity<WrappedResponse<Void>> {
         // Convert pathId to Int value
         val id = pathId.toIntOrNull()

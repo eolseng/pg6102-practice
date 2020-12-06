@@ -46,7 +46,7 @@ class BlueprintService(
     }
 
     /**
-     * Gets all Blueprints sorted by Title as pages
+     * Gets all Blueprints sorted by Title. Uses KeySet/Seek pagination
      */
     @Transactional
     fun getNextPage(

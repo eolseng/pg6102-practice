@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: blueprint
+    name: coupling
   resources:
     add-mappings: false
   mvc:
@@ -11,9 +11,9 @@ spring:
 
   # Database
   datasource:
-    url: "jdbc:postgresql://${BLUEPRINT_DB_URL:localhost:5432}/${BLUEPRINT_DB_NAME:postgres}"
-    username: ${BLUEPRINT_DB_USERNAME:postgres}
-    password: ${BLUEPRINT_DB_PASSWORD:""}
+    url: "jdbc:postgresql://${COUPLING_DB_URL:localhost:5432}/${COUPLING_DB_NAME:postgres}"
+    username: ${COUPLING_DB_USERNAME:postgres}
+    password: ${COUPLING_DB_PASSWORD:""}
     driver-class-name: "org.postgresql.Driver"
   jpa:
     database: "postgresql"
