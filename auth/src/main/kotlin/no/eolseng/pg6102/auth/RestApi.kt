@@ -56,14 +56,7 @@ class RestApi(
         if (!registered) return RestResponseFactory.userError(message = "Username already exists")
 
         // Publish message that a new user is created
-        try {
-            rabbitMQ.convertAndSend(userCreatedFanout.name, "", username)
-        } catch (e: AmqpException) {
-            // Failed to publish message - rolling back
-            // TODO: Should check return value and log if rollback failed
-            service.deleteUser(username, password)
-            return RestResponseFactory.serverFailure("Server failed to create user")
-        }
+        rabbitMQ.convertAndSend(userCreatedFanout.name, "", username)
 
         // Attempt to retrieve the user from database
         val userDetails = try {
