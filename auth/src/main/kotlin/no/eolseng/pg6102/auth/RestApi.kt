@@ -7,7 +7,6 @@ import no.eolseng.pg6102.auth.db.UserService
 import no.eolseng.pg6102.auth.dto.AuthDto
 import no.eolseng.pg6102.utils.wrappedresponse.RestResponseFactory
 import no.eolseng.pg6102.utils.wrappedresponse.WrappedResponse
-import org.springframework.amqp.AmqpException
 import org.springframework.amqp.core.FanoutExchange
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.http.MediaType
@@ -29,7 +28,7 @@ class RestApi(
         private val authManager: AuthenticationManager,
         private val userDetailsService: UserDetailsServiceImpl,
         private val rabbitMQ: RabbitTemplate,
-        private val userCreatedFanout: FanoutExchange
+        private val userCreatedFx: FanoutExchange
 ) {
 
     @ApiOperation("Retrieve name and roles of signed in user")
@@ -56,7 +55,7 @@ class RestApi(
         if (!registered) return RestResponseFactory.userError(message = "Username already exists")
 
         // Publish message that a new user is created
-        rabbitMQ.convertAndSend(userCreatedFanout.name, "", username)
+        rabbitMQ.convertAndSend(userCreatedFx.name, "", username)
 
         // Attempt to retrieve the user from database
         val userDetails = try {
