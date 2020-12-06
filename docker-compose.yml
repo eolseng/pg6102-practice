@@ -75,16 +75,31 @@ services:
     env_file:
       - ./.env
 
-  blueprint-db:
+  # COUPLING SERVICE
+  coupling:
+    build:
+      context: ./coupling
+      dockerfile: Dockerfile
+    networks:
+      - service-network
+      - coupling-db-network
+    depends_on:
+      - coupling-db
+      - redis
+      - rabbitmq
+    env_file:
+      - ./.env
+
+  coupling-db:
     image: postgres:12
     environment:
-      POSTGRES_DB: ${BLUEPRINT_DB_NAME}
-      POSTGRES_USER: ${BLUEPRINT_DB_USERNAME}
-      POSTGRES_PASSWORD: ${BLUEPRINT_DB_PASSWORD}
+      POSTGRES_DB: ${COUPLING_DB_NAME}
+      POSTGRES_USER: ${COUPLING_DB_USERNAME}
+      POSTGRES_PASSWORD: ${COUPLING_DB_PASSWORD}
     volumes:
       - /var/lib/postgresql/data
     networks:
-      - blueprint-db-network
+      - coupling-db-network
 
   # FRONTEND SERVICE
   frontend:
@@ -102,4 +117,6 @@ networks:
   auth-db-network:
     driver: bridge
   blueprint-db-network:
+    driver: bridge
+  coupling-db-network:
     driver: bridge
