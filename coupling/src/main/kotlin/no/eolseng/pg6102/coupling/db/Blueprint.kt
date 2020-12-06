@@ -9,7 +9,7 @@ import javax.persistence.OneToMany
 class Blueprint(
 
         @get:Id
-        var id: Int,
+        var id: Long,
 
         @get:OneToMany(mappedBy = "blueprint", cascade = [(CascadeType.ALL)])
         var couplings: MutableList<Coupling> = mutableListOf()

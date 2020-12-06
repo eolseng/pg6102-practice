@@ -1,5 +1,6 @@
 package no.eolseng.pg6102.coupling.db
 
+import no.eolseng.pg6102.coupling.dto.CouplingDto
 import javax.persistence.*
 
 @Entity
@@ -16,3 +17,7 @@ class Coupling(
         var blueprint: Blueprint
 
 )
+
+fun Coupling.toDto(): CouplingDto {
+    return CouplingDto(id, user.id, blueprint.id)
+}

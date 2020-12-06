@@ -4,16 +4,16 @@ import io.swagger.annotations.ApiModelProperty
 
 data class BlueprintDto(
 
-        @get:ApiModelProperty("The ID of the blueprint")
+        @get:ApiModelProperty("The ID of the Blueprint")
         var id: Int? = null,
 
-        @get:ApiModelProperty("The title of the blueprint")
+        @get:ApiModelProperty("The title of the Blueprint")
         var title: String? = null,
 
-        @get:ApiModelProperty("The description of the blueprint")
+        @get:ApiModelProperty("The description of the Blueprint")
         var description: String? = null,
 
-        @get:ApiModelProperty("The value of the blueprint")
+        @get:ApiModelProperty("The value of the Blueprint")
         var value: Int? = null
 
 )
