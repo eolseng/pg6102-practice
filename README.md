@@ -7,6 +7,7 @@ Attempting to design as a "Twelve-Factor App", but using a root-POM as done in t
 1. Check out [jOOQ](https://www.jooq.org/doc/latest/manual/sql-execution/alternative-execution-models/using-jooq-with-jpa/) with `seek()` for easier implementation of keyset/seek pagination
 2. Rewrite existence checks from using expensive HEAD-requests to
 3. Create own UserDetailsService implementation
+4. Add test data
 
 ## Scripts:
 * `./build-and-start`

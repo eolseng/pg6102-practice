@@ -50,7 +50,7 @@ export default function Header() {
                 <Link href={"/login"}>
                     <Button className={"m-1"}>Login</Button>
                 </Link>
-            </>)
+            </>);
         }
     }
 
@@ -72,7 +72,6 @@ export default function Header() {
     )
 };
 
-
 export function LogoutButton() {
 
     const {dispatch} = useContext(UserContext)
@@ -80,14 +79,11 @@ export function LogoutButton() {
 
     const handleLogout = async () => {
         const result = await logout()
-        console.log(result)
         if (result) {
             await getUserData()
             dispatch({type: "setUser"})
             await router.push("/")
         }
     }
-
     return <Button onClick={handleLogout} className={"m-1"}>Logout</Button>
-
 }
