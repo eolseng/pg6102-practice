@@ -1,4 +1,4 @@
-# Practise project for PG6102
+# Practice project for PG6102
 Microservice architecture based on SpringBoot, written in Kotlin.
 
 Attempting to design as a "Twelve-Factor App", but using a root-POM as done in the course.
