@@ -4,6 +4,7 @@ import no.eolseng.pg6102.coupling.dto.CouplingDto
 import javax.persistence.*
 
 @Entity
+@Table(name = "COUPLINGS")
 class Coupling(
 
         @get:Id

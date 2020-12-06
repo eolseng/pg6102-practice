@@ -39,7 +39,7 @@ export async function login(username, password) {
         .catch(() => false)
 }
 
-export async function logout(){
+export async function logout() {
     return axios
         .post(BASE_PATH + "/logout")
         .then(res => res.status === 204)

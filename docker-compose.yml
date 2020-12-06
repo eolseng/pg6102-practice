@@ -75,6 +75,17 @@ services:
     env_file:
       - ./.env
 
+  blueprint-db:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: ${BLUEPRINT_DB_NAME}
+      POSTGRES_USER: ${BLUEPRINT_DB_USERNAME}
+      POSTGRES_PASSWORD: ${BLUEPRINT_DB_PASSWORD}
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - blueprint-db-network
+
   # COUPLING SERVICE
   coupling:
     build:

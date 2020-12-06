@@ -1,5 +1,4 @@
-import {createContext, useContext, useReducer} from "react";
-import {getUserData} from "../lib/auth";
+import {createContext, useReducer} from "react";
 
 const initialState = {
     user: null
@@ -19,7 +18,7 @@ const reducer = (state, action) => {
     }
 }
 
-function UserContextProvider(props){
+function UserContextProvider(props) {
 
     const [state, dispatch] = useReducer(reducer, initialState)
     const value = {state, dispatch}

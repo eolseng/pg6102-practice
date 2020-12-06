@@ -11,7 +11,7 @@ export default function Blueprints() {
     const pageSize = 6
 
     const [blueprints, setBlueprints] = useState([])
-    const [next, setNext] = useState("/api/v1/blueprint?amount=" + pageSize)
+    const [next, setNext] = useState("/api/v1/blueprint/blueprints?amount=" + pageSize)
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(0)
     const loader = useRef(null)
@@ -37,7 +37,7 @@ export default function Blueprints() {
     }, [])
 
     useEffect(() => {
-            loadMore()
+        loadMore()
     }, [page])
 
     // Fetch the next page

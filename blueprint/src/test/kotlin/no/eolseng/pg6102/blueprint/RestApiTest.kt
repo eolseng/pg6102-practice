@@ -38,7 +38,7 @@ class RestApiTest {
         // Setup RestAssured
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = port
-        RestAssured.basePath = API_BASE_PATH
+        RestAssured.basePath = "$API_BASE_PATH/blueprints"
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
 
         // Clear repository

@@ -1,6 +1,5 @@
 package no.eolseng.pg6102.auth.config
 
-import no.eolseng.pg6102.auth.db.UserDetailsServiceImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
@@ -10,14 +9,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler
+import javax.sql.DataSource
 
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig(
-        private val userDetailsService: UserDetailsServiceImpl
+        private val dataSource: DataSource
+//        private val userDetailsService: UserDetailsServiceImpl
+
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean
@@ -26,14 +29,33 @@ class WebSecurityConfig(
     }
 
     @Bean
+    override fun userDetailsServiceBean(): UserDetailsService {
+        return super.userDetailsServiceBean()
+    }
+
+
+    @Bean
     override fun authenticationManagerBean(): AuthenticationManager {
         return super.authenticationManagerBean()
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth
-                .userDetailsService(userDetailsService)
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .usersByUsernameQuery("""
+                     SELECT username, password, enabled
+                     FROM users
+                     WHERE username=?
+                     """)
+                .authoritiesByUsernameQuery("""
+                     SELECT x.username, y.authority
+                     FROM users x, authorities y
+                     WHERE x.username=? and y.username=x.username
+                     """)
                 .passwordEncoder(passwordEncoder())
+//        auth
+//                .userDetailsService(userDetailsService)
+//                .passwordEncoder(passwordEncoder())
     }
 
     override fun configure(http: HttpSecurity) {

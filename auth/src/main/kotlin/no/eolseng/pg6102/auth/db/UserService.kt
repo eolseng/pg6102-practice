@@ -2,6 +2,7 @@ package no.eolseng.pg6102.auth.db
 
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -11,7 +12,7 @@ import javax.transaction.Transactional
 @Transactional
 class UserService(
         private val repository: UserRepository,
-        private val userDetailsService: UserDetailsServiceImpl,
+        private val userDetailsServiceBean: UserDetailsService,
         private val authManager: AuthenticationManager,
         private val passwordEncoder: PasswordEncoder
 ) {
@@ -46,7 +47,7 @@ class UserService(
 
         // Attempt to retrieve the user from database
         val userDetails = try {
-            userDetailsService.loadUserByUsername(username)
+            userDetailsServiceBean.loadUserByUsername(username)
         } catch (e: UsernameNotFoundException) {
             return false
         }

@@ -5,8 +5,8 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 @Entity
-@Table(name="USERS")
-class User (
+@Table(name = "USERS")
+class User(
 
         @get:Id
         @get:NotBlank
@@ -17,10 +17,10 @@ class User (
 
         @get:ElementCollection
         @get:CollectionTable(
-                name="authorities",
+                name = "authorities",
                 joinColumns = [JoinColumn(name = "username")]
         )
-        @get:Column(name="authority")
+        @get:Column(name = "authority")
         @get:NotNull
         var roles: Set<String>? = setOf(),
 

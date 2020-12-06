@@ -10,6 +10,7 @@ class RabbitConfig {
     fun userCreatedFx(): FanoutExchange {
         return FanoutExchange("user.created.fx")
     }
+
     @Bean
     fun blueprintCreatedFx(): FanoutExchange {
         return FanoutExchange("blueprint.created.fx")

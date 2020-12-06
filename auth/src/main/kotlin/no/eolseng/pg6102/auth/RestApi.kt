@@ -2,7 +2,6 @@ package no.eolseng.pg6102.auth
 
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import no.eolseng.pg6102.auth.db.UserDetailsServiceImpl
 import no.eolseng.pg6102.auth.db.UserService
 import no.eolseng.pg6102.auth.dto.AuthDto
 import no.eolseng.pg6102.utils.wrappedresponse.RestResponseFactory
@@ -16,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.*
 import java.net.URI
@@ -26,7 +26,7 @@ import java.net.URI
 class RestApi(
         private val service: UserService,
         private val authManager: AuthenticationManager,
-        private val userDetailsService: UserDetailsServiceImpl,
+        private val userDetailsServiceBean: UserDetailsService,
         private val rabbitMQ: RabbitTemplate,
         private val userCreatedFx: FanoutExchange
 ) {
@@ -59,7 +59,7 @@ class RestApi(
 
         // Attempt to retrieve the user from database
         val userDetails = try {
-            userDetailsService.loadUserByUsername(username)
+            userDetailsServiceBean.loadUserByUsername(username)
         } catch (e: UsernameNotFoundException) {
             return RestResponseFactory.serverFailure("Could not retrieve user from database")
         }
@@ -86,7 +86,7 @@ class RestApi(
 
         // Attempt to retrieve the user from database
         val userDetails = try {
-            userDetailsService.loadUserByUsername(username)
+            userDetailsServiceBean.loadUserByUsername(username)
         } catch (e: UsernameNotFoundException) {
             return RestResponseFactory.userError("Username not found")
         }

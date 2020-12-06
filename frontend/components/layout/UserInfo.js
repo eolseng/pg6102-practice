@@ -7,7 +7,7 @@ export default function UserInfo() {
 
     // Fetch initial user data
     const {state, dispatch} = useContext(UserContext)
-    useEffect(()=> {
+    useEffect(() => {
         // Fetch user data and update user state
         getUserData().then(data => dispatch({type: "setUser", payload: data.data}))
     }, [])

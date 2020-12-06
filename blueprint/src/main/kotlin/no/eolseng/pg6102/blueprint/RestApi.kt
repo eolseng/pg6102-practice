@@ -14,18 +14,16 @@ import no.eolseng.pg6102.utils.wrappedresponse.WrappedResponse
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 
 const val API_BASE_PATH = "/api/v1/blueprint"
 
-@Api(value = API_BASE_PATH, description = "Endpoint managing the Blueprints in the system")
+@Api(value = "$API_BASE_PATH/blueprints", description = "Endpoint managing the Blueprints in the system")
 @RestController
 @RequestMapping(
-        path = [API_BASE_PATH],
+        path = ["$API_BASE_PATH/blueprints"],
         produces = [(MediaType.APPLICATION_JSON_VALUE)]
 )
 class RestApi(
@@ -49,7 +47,7 @@ class RestApi(
         val blueprint = service.createBlueprint(dto.title!!, dto.description!!, dto.value!!)
                 ?: return RestResponseFactory.serverFailure("Failed to create Blueprint", 500)
         // Return path to the created blueprint
-        return RestResponseFactory.created(URI.create("$API_BASE_PATH/${blueprint.id}"))
+        return RestResponseFactory.created(URI.create("$API_BASE_PATH/blueprints/${blueprint.id}"))
     }
 
     @ApiOperation("Delete a specific Blueprint by the ID")
@@ -109,7 +107,7 @@ class RestApi(
         page.list = dtos
         // Check if not last page - will return a blank last page if match
         if (dtos.size == amount) {
-            page.next = "$API_BASE_PATH?keysetId=${dtos.last().id}&keysetTitle=${dtos.last().title}&amount=$amount"
+            page.next = "$API_BASE_PATH/blueprints?keysetId=${dtos.last().id}&keysetTitle=${dtos.last().title}&amount=$amount"
         }
         // Return the page
         return RestResponseFactory.payload(200, page)

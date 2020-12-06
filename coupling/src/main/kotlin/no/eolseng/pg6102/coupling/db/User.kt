@@ -1,11 +1,9 @@
 package no.eolseng.pg6102.coupling.db
 
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
+@Table(name = "USERS")
 class User(
 
         @get:Id
