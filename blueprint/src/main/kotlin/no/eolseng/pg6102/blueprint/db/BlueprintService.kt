@@ -8,6 +8,7 @@ import javax.persistence.EntityManager
 import javax.persistence.TypedQuery
 
 @Service
+@Transactional
 class BlueprintService(
         private val entityManager: EntityManager,
         private val repo: BlueprintRepository,
@@ -15,19 +16,18 @@ class BlueprintService(
         private val blueprintCreatedFx: FanoutExchange
 ) {
 
-    @Transactional
     fun createBlueprint(
             title: String,
             description: String,
             value: Int
     ): Blueprint? {
-        // Create the blueprint
+        // Create the Blueprint
         var blueprint = Blueprint(title = title, description = description, value = value)
-        // Save the blueprint and get the generated ID
+        // Save the Blueprint and get the generated ID
         blueprint = repo.save(blueprint)
-        // Publish message that new blueprint is created
+        // Publish message that new Blueprint is created
         rabbit.convertAndSend(blueprintCreatedFx.name, "", blueprint.id)
-        // Return the blueprint
+        // Return the Blueprint
         return blueprint
     }
 
@@ -35,7 +35,6 @@ class BlueprintService(
      * Deletes a Blueprint by the given ID
      * @return true if Blueprint
      */
-    @Transactional
     fun deleteBlueprint(id: Int): Boolean {
         return if (repo.existsById(id)) {
             repo.deleteById(id)
@@ -48,7 +47,6 @@ class BlueprintService(
     /**
      * Gets all Blueprints sorted by Title. Uses KeySet/Seek pagination
      */
-    @Transactional
     fun getNextPage(
             keysetId: Int?,
             keysetTitle: String?,

@@ -10,7 +10,7 @@ class Coupling(
 
         @get:Id
         @get:GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long = 0,
+        var id: Long? = null,
 
         @get:NotNull
         @get:ManyToOne

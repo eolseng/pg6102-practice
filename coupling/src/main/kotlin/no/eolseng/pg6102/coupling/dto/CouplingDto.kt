@@ -14,3 +14,12 @@ data class CouplingDto(
         var blueprintId: Long? = null
 
 )
+
+fun CouplingDto.validateRegistration(): Boolean {
+    // Check for correct nulls
+    if (this.id != null) return false
+    this.userId ?: return false
+    this.blueprintId ?: return false
+    // DTO is valid for registration
+    return true
+}

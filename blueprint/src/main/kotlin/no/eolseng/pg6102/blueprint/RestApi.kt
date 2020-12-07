@@ -43,10 +43,10 @@ class RestApi(
         // Check if title exists
         if (repository.existsByTitle(dto.title!!))
             return RestResponseFactory.userError("Blueprint with title ${dto.title} already exists")
-        // Save blueprint in the database
+        // Save Blueprint in the database
         val blueprint = service.createBlueprint(dto.title!!, dto.description!!, dto.value!!)
                 ?: return RestResponseFactory.serverFailure("Failed to create Blueprint", 500)
-        // Return path to the created blueprint
+        // Return path to the created Blueprint
         return RestResponseFactory.created(URI.create("$API_BASE_PATH/blueprints/${blueprint.id}"))
     }
 
@@ -75,7 +75,6 @@ class RestApi(
             @ApiParam("The ID of the Blueprint to retrieve")
             @PathVariable("id") pathId: String
     ): ResponseEntity<WrappedResponse<Any>> {
-        //
         // Convert pathId to Int value
         val id = pathId.toIntOrNull()
                 ?: return RestResponseFactory.userError("ID must be a number")
