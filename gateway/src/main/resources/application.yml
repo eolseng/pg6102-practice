@@ -24,9 +24,13 @@ spring:
           predicates:
             - Path=/api/v1/auth/**
         - id: Blueprint
-          uri: lb://${BLUEPRINT_SERVICE_NAME}:8080
+          uri: lb://${BLUEPRINT_SERVICE_NAME}:8081
           predicates:
             - Path=/api/v1/blueprint/**
+        - id: Coupling
+          uri: lb://${COUPLING_SERVICE_NAME}:8082
+          predicates:
+            - Path=/api/v1/coupling/**
         - id: Frontend
           uri: http://${FRONTEND_URL}:3000
           predicates:
