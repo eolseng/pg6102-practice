@@ -40,4 +40,5 @@ spring:
         instance-id: ${spring.application.name}:${random.value}
 
 service_urls:
+  auth: ${AUTH_SERVICE_NAME:auth}
   blueprint: ${BLUEPRINT_SERVICE_NAME:blueprint}

@@ -1,14 +1,17 @@
 package no.eolseng.pg6102.coupling.db
 
 import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "USERS")
 class User(
 
         @get:Id
-        var id: Long
-//
-//        @get:OneToMany(mappedBy = "user", cascade = [(CascadeType.ALL)])
-//        var couplings: MutableList<Coupling> = mutableListOf()
+        @get:NotNull
+        var id: Long? = null,
+
+        @get:OneToMany(mappedBy = "user", cascade = [(CascadeType.ALL)])
+        var couplings: MutableList<Coupling> = mutableListOf()
+
 )
