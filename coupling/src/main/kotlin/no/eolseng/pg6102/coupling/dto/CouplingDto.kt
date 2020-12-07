@@ -8,9 +8,9 @@ data class CouplingDto(
         var id: Long? = null,
 
         @get:ApiModelProperty("The ID of the Couplings User")
-        var userId: Long? = null,
+        var userId: String? = null,
 
         @get:ApiModelProperty("The ID of the Couplings Blueprint")
-        var couplingId: Long? = null
+        var blueprintId: Long? = null
 
 )

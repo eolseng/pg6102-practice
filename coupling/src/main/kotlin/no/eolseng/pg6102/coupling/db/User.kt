@@ -9,7 +9,7 @@ class User(
 
         @get:Id
         @get:NotNull
-        var id: Long? = null,
+        var id: String? = null,
 
         @get:OneToMany(mappedBy = "user", cascade = [(CascadeType.ALL)])
         var couplings: MutableList<Coupling> = mutableListOf()

@@ -1,5 +1,6 @@
 package no.eolseng.pg6102.coupling.db
 
+import no.eolseng.pg6102.coupling.dto.CouplingDto
 import javax.persistence.*
 import javax.validation.constraints.NotNull
 
@@ -21,6 +22,6 @@ class Coupling(
 
 )
 
-//fun Coupling.toDto(): CouplingDto {
-//    return CouplingDto(id, user.id, blueprint.id)
-//}
+fun Coupling.toDto(): CouplingDto {
+    return CouplingDto(id, user.id, blueprint.id)
+}

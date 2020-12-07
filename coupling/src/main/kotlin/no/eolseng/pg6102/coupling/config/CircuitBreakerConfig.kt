@@ -14,11 +14,6 @@ class CircuitBreakerConfig {
     }
 
     @Bean
-    fun userCircuitBreaker(): CircuitBreaker {
-        return cbFactory().create("userCircuitBreaker")
-    }
-
-    @Bean
     fun blueprintCircuitBreaker(): CircuitBreaker {
         return cbFactory().create("blueprintCircuitBreaker")
     }
