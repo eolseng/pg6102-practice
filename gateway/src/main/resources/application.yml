@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: gateway
+    name: ${GATEWAY_SERVICE_NAME:gateway}
 
   cloud:
     # Discovery Configuration
@@ -20,11 +20,11 @@ spring:
           enabled: true
       routes:
         - id: Auth
-          uri: lb://${AUTH_URL}:8080
+          uri: lb://${AUTH_SERVICE_NAME}:8080
           predicates:
             - Path=/api/v1/auth/**
         - id: Blueprint
-          uri: lb://${BLUEPRINT_URL}:8080
+          uri: lb://${BLUEPRINT_SERVICE_NAME}:8080
           predicates:
             - Path=/api/v1/blueprint/**
         - id: Frontend

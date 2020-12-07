@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: auth
+    name: ${AUTH_SERVICE_NAME:auth}
 
   # Database
   datasource:

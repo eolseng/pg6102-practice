@@ -38,3 +38,6 @@ spring:
       port: ${DISCOVERY_PORT:8500}
       discovery:
         instance-id: ${spring.application.name}:${random.value}
+
+service_urls:
+  blueprint: ${BLUEPRINT_SERVICE_NAME:blueprint}

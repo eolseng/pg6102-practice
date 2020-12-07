@@ -1,9 +1,9 @@
 server:
-  port: ${PORT:8080}
+  port: ${PORT:8081}
 
 spring:
   application:
-    name: blueprint
+    name: ${BLUEPRINT_SERVICE_NAME:blueprint}
   resources:
     add-mappings: false
   mvc:

@@ -7,8 +7,8 @@ import javax.persistence.*
 class User(
 
         @get:Id
-        var id: Long,
-
-        @get:OneToMany(mappedBy = "user", cascade = [(CascadeType.ALL)])
-        var couplings: MutableList<Coupling> = mutableListOf()
+        var id: Long
+//
+//        @get:OneToMany(mappedBy = "user", cascade = [(CascadeType.ALL)])
+//        var couplings: MutableList<Coupling> = mutableListOf()
 )

@@ -8,6 +8,7 @@ Attempting to design as a "Twelve-Factor App", but using a root-POM as done in t
 2. Rewrite existence checks from using expensive HEAD-requests to
 3. Create own UserDetailsService implementation
 4. Add test data
+5. RestExceptionHandler `org.tsdes.advanced.rest.exception`!
 
 ## Scripts:
 * `./build-and-start`
