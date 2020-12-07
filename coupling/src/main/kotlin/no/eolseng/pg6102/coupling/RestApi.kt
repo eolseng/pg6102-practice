@@ -8,7 +8,6 @@ import no.eolseng.pg6102.coupling.dto.CouplingDto
 import no.eolseng.pg6102.coupling.dto.validateRegistration
 import no.eolseng.pg6102.utils.wrappedresponse.RestResponseFactory
 import no.eolseng.pg6102.utils.wrappedresponse.WrappedResponse
-import org.apache.naming.factory.ResourceFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
