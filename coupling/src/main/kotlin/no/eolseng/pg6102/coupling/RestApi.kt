@@ -59,19 +59,27 @@ class RestApi(
     @GetMapping("/{id}")
     fun getCouplingById(
             @ApiParam("The ID of the Coupling to retrieve")
-            @PathVariable("id") pathId: String
+            @PathVariable("id") pathId: String,
+            auth: Authentication
     ): ResponseEntity<WrappedResponse<Any>> {
-        // TODO: Må sjekke med Auth!
         // Convert pathId to Long value
         val id = pathId.toLongOrNull()
                 ?: return RestResponseFactory.userError("ID must be a number")
         // Retrieve the Coupling from the repository
         val coupling = repository.findByIdOrNull(id)
                 ?: return RestResponseFactory.notFound("Could not find Coupling with ID $id")
+        // Check that authenticated user is owner or admin
+        if (auth.name != coupling.user.id && !auth.hasRole("ADMIN"))
+            return RestResponseFactory.userError(httpStatusCode = 403, message = "Cannot retrieve other users Couplings")
         // Convert to DTO
         val dto = coupling.toDto()
         // Send the DTO
         return RestResponseFactory.payload(200, dto)
+    }
+
+    // Utility function to check if Authenticated User has a given role. Use "ADMIN", not "ROLE_ADMIN".
+    fun Authentication.hasRole(role: String): Boolean {
+        return this.authorities.stream().anyMatch { it.authority == role }
     }
 
 }

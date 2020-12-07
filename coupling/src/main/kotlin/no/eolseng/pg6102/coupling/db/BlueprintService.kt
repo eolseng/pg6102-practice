@@ -1,6 +1,5 @@
 package no.eolseng.pg6102.coupling.db
 
-
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -46,14 +45,13 @@ class BlueprintService(
     }
 
     private fun verifyBlueprint(id: Long): Boolean {
+        val uri = URI("http://$blueprintUrl/api/v1/blueprint/blueprints/$id")
         return cb.run(
                 {
-                    val uri = URI("http://$blueprintUrl/api/v1/blueprint/blueprints/$id")
                     try {
                         // Use HEAD request to check with Blueprint Service if Blueprint exists
-                        client
-                                .exchange(uri, HttpMethod.HEAD, null, String::class.java)
-                                .statusCode.is2xxSuccessful
+                        val res = client.exchange(uri, HttpMethod.HEAD, null, String::class.java)
+                        res.statusCode.is2xxSuccessful
                     } catch (err: HttpClientErrorException.NotFound) {
                         // Catch 404 as an expected error
                         false
@@ -63,6 +61,7 @@ class BlueprintService(
                     // Client did not return 2xx or 404
                     logger.error("Failed to retrieve data from Blueprint Service: ${err.message}")
                     false
-                })
+                }
+        )
     }
 }
