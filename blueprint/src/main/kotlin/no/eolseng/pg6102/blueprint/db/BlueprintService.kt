@@ -1,5 +1,11 @@
 package no.eolseng.pg6102.blueprint.db
 
+import no.eolseng.pg6102.blueprint.RestApi
+import no.eolseng.pg6102.blueprint.config.blueprintExchangeName
+import no.eolseng.pg6102.blueprint.config.newBlueprintRK
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.springframework.amqp.core.DirectExchange
 import org.springframework.amqp.core.FanoutExchange
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Service
@@ -13,8 +19,10 @@ class BlueprintService(
         private val entityManager: EntityManager,
         private val repo: BlueprintRepository,
         private val rabbit: RabbitTemplate,
-        private val blueprintCreatedFx: FanoutExchange
+        private val blueprintDx: DirectExchange
 ) {
+
+    private val logger: Logger = LoggerFactory.getLogger(BlueprintService::class.java)
 
     fun createBlueprint(
             title: String,
@@ -26,7 +34,8 @@ class BlueprintService(
         // Save the Blueprint and get the generated ID
         blueprint = repo.save(blueprint)
         // Publish message that new Blueprint is created
-        rabbit.convertAndSend(blueprintCreatedFx.name, "", blueprint.id)
+        logger.info("Blueprint[ID=${blueprint.id}] sent to RabbitMQ[exchange=${blueprintExchangeName}, routingKey='NEW_BLUEPRINT']")
+        rabbit.convertAndSend(blueprintExchangeName, newBlueprintRK, blueprint.id)
         // Return the Blueprint
         return blueprint
     }

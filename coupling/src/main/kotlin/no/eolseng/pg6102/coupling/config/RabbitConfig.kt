@@ -2,73 +2,39 @@ package no.eolseng.pg6102.coupling.config
 
 import org.springframework.amqp.core.Binding
 import org.springframework.amqp.core.BindingBuilder
-import org.springframework.amqp.core.FanoutExchange
+import org.springframework.amqp.core.DirectExchange
 import org.springframework.amqp.core.Queue
-import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-// User
-const val userCreatedExchangeName = "user.created.fx"
-const val userCreatedQueueName = "create-user_couplings_q"
-
 // Blueprint
-const val blueprintCreatedExchangeName = "blueprint.created.fx"
-const val blueprintCreatedQueueName = "create-blueprint_couplings_q"
+const val blueprintDxName = "pg6102.blueprint.dx"
+const val newBlueprintQueueName = "new-blueprint.couplings.q"
+const val newBlueprintRK = "new_blueprint"
 
 @Configuration
 class RabbitConfig {
 
-    // USER CREATED
-    @Bean
-    fun userCreatedFx(): FanoutExchange {
-        return FanoutExchange(userCreatedExchangeName)
-    }
-
-    @Bean
-    fun createUserQueue(): Queue {
-        return Queue(userCreatedQueueName)
-    }
-
-    @Bean
-    fun createUserBinding(
-            userCreatedFx: FanoutExchange,
-            createUserQueue: Queue
-    ): Binding {
-        return BindingBuilder
-                .bind(createUserQueue)
-                .to(userCreatedFx)
-    }
-
-    @RabbitListener(queues = [userCreatedQueueName])
-    fun createUserOnMessage(username: String) {
-        // Todo: Not yet implemented
-    }
-
     // BLUEPRINT CREATED
     @Bean
-    fun blueprintCreatedFx(): FanoutExchange {
-        return FanoutExchange(blueprintCreatedExchangeName)
+    fun blueprintDx(): DirectExchange {
+        return DirectExchange(blueprintDxName)
     }
 
     @Bean
-    fun createBlueprintQueue(): Queue {
-        return Queue(blueprintCreatedQueueName)
+    fun newBlueprintQueue(): Queue {
+        return Queue(newBlueprintQueueName)
     }
 
     @Bean
-    fun createBlueprintBinding(
-            blueprintCreatedFx: FanoutExchange,
-            createBlueprintQueue: Queue
+    fun newBlueprintBinding(
+            blueprintDx: DirectExchange,
+            newBlueprintQueue: Queue
     ): Binding {
         return BindingBuilder
-                .bind(createBlueprintQueue)
-                .to(blueprintCreatedFx)
-    }
-
-    @RabbitListener(queues = [blueprintCreatedQueueName])
-    fun createBlueprintOnMessage(id: Int) {
-        // Todo: Not yet implemented
+                .bind(newBlueprintQueue)
+                .to(blueprintDx)
+                .with(newBlueprintRK)
     }
 
 }
